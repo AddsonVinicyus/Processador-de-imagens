@@ -20,3 +20,7 @@ def thresholding(image_array, threshold_value):
     result = np.where(image_array > threshold_value, 255, 0)
 
     return result.astype(np.uint8)
+
+def brightness_adjustment(image_array, adjustment_value):
+    result = np.clip(image_array.astype(np.float32) + adjustment_value, 0, 255)
+    return result.astype(np.uint8)
