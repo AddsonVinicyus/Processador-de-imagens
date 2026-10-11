@@ -24,3 +24,8 @@ def thresholding(image_array, threshold_value):
 def brightness_adjustment(image_array, adjustment_value):
     result = np.clip(image_array.astype(np.float32) + adjustment_value, 0, 255)
     return result.astype(np.uint8)
+
+def contrast_adjustment(image_array, contrast_value):
+    alpha = (contrast_value + 127) / 127
+    result = np.clip(alpha * (image_array.astype(np.float64) - 128) + 128, 0, 255)
+    return result.astype(np.uint8)
