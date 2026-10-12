@@ -1,7 +1,12 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
+from processing.spatial import rgb_to_gray
+
 def calc_histogram(image):
+
+    image = rgb_to_gray(image)
+
     histogram = np.zeros(256, dtype=int)
 
     height, width = image.shape
