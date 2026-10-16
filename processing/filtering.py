@@ -29,3 +29,22 @@ def smoothing_average(size):
     kernel = kernel / (size * size)
 
     return kernel
+
+def smoothing_weighted_average(size):
+    kernel = np.array([[1, 2, 1],
+                        [2, 4, 2],
+                        [1, 2, 1]], dtype=np.float32)
+
+    kernel = kernel / 16.0
+
+    return kernel
+
+def gaussian_smoothing(size, sigma):
+
+    a = size // 2
+    x, y = np.mgrid[-a:a+1, -a:a+1]
+    kernel = np.exp(-(x**2 + y**2) / (2 * sigma**2))
+
+    kernel = kernel / np.sum(kernel)
+
+    return kernel
