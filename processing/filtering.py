@@ -23,3 +23,9 @@ def convolution(image, kernel):
     convolved_image = np.clip(convolved_image, 0, 255)
 
     return convolved_image.astype(np.uint8)
+
+def smoothing_average(size):
+    kernel = np.ones((size, size), dtype=np.float32)
+    kernel = kernel / (size * size)
+
+    return kernel
