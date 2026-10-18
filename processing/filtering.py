@@ -98,6 +98,7 @@ def laplacian(image, mask="sem_diagonais"):
     first_laplacian_image = convolution(image_float, kernel)
     process_laplacian_image = image_float + (c * first_laplacian_image)
 
+    #tom acinzentado
     result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
 
     return result_laplacian_image
@@ -118,4 +119,17 @@ def laplacian_border_detection(image):
 
     result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
 
-    return result_laplacian_image
+    return process_laplacian_image
+
+def high_boost(image, k=2.0, size=3):
+    image_float = np.asarray(image, dtype=np.float32)
+
+    kernel = smoothing_average(size)
+    blurred = convolution(image_float, kernel)
+
+    g_mask = image_float - blurred
+
+    result = image_float + (k * g_mask)
+
+    #tom acinzentado 
+    return np.clip(np.rint(result), 0, 255).astype(np.uint8)
