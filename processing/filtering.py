@@ -24,6 +24,17 @@ def convolution(image, kernel):
 
     return convolved_image
 
+def normalize_for_display(image):
+    min_value = np.min(image)
+    max_value = np.max(image)
+
+    if max_value == min_value:
+        return np.zeros(image.shape, dtype=np.uint8)
+
+    normalized = (image - min_value) / (max_value - min_value)
+
+    return np.round(normalized * 255).astype(np.uint8)
+
 def smoothing_average(size):
     kernel = np.ones((size, size), dtype=np.float32)
     kernel = kernel / (size * size)
@@ -48,6 +59,22 @@ def gaussian_smoothing(size, sigma):
     kernel = kernel / np.sum(kernel)
 
     return kernel
+
+def median_filter(image, size):
+    r = size // 2
+    height, width = image.shape
+
+    image_pad = np.pad(image, pad_width=r, mode="edge")
+
+    result = np.zeros((height,width), dtype=np.float64)
+
+    for y in range(height):
+        for x in range(width):
+            neighborhood = image_pad[y:y + size, x:x + size]
+
+            result[y,x] = np.median(neighborhood)
+
+    return result
 
 def laplacian(image, mask="com_diagonais"):
     if mask == 'sem_diagonais':
