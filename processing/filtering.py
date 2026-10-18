@@ -20,9 +20,9 @@ def convolution(image, kernel):
             convolved_value = np.sum(region * convolution_kernel)
             convolved_image[i, j] = convolved_value
 
-    convolved_image = np.clip(convolved_image, 0, 255)
+    #convolved_image = np.clip(convolved_image, 0, 255)
 
-    return convolved_image.astype(np.uint8)
+    return convolved_image
 
 def smoothing_average(size):
     kernel = np.ones((size, size), dtype=np.float32)
@@ -48,3 +48,29 @@ def gaussian_smoothing(size, sigma):
     kernel = kernel / np.sum(kernel)
 
     return kernel
+
+def laplacian(image, mask="com_diagonais"):
+    if mask == 'sem_diagonais':
+        kernel = np.array([
+            [0, 1, 0],
+            [1, -4, 1],
+            [0, 1, 0]
+        ], dtype=np.float32)
+        c = -1
+
+    elif mask == 'com_diagonais':
+        kernel = np.array([
+            [1, 1, 1],
+            [1, -8, 1],
+            [1, 1, 1]
+        ], dtype=np.float32)
+        c = -1
+
+    image_float = image.astype(np.float32)
+
+    first_laplacian_image = convolution(image_float, kernel)
+    process_laplacian_image = image_float + (c * first_laplacian_image)
+
+    result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
+
+    return result_laplacian_image
