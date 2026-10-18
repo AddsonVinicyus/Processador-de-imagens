@@ -76,7 +76,7 @@ def median_filter(image, size):
 
     return result
 
-def laplacian(image, mask="com_diagonais"):
+def laplacian(image, mask="sem_diagonais"):
     if mask == 'sem_diagonais':
         kernel = np.array([
             [0, 1, 0],
@@ -97,6 +97,24 @@ def laplacian(image, mask="com_diagonais"):
 
     first_laplacian_image = convolution(image_float, kernel)
     process_laplacian_image = image_float + (c * first_laplacian_image)
+
+    result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
+
+    return result_laplacian_image
+
+def laplacian_border_detection(image):
+    kernel = np.array([
+            [0, 1, 0],
+            [1, -4, 1],
+            [0, 1, 0]
+        ], dtype=np.float32)
+    c = -1
+
+    image_float = image.astype(np.float32)
+
+    first_laplacian_image = convolution(image_float, kernel)
+    
+    process_laplacian_image = np.abs(first_laplacian_image)
 
     result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
 
