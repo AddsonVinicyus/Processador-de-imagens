@@ -119,7 +119,7 @@ def laplacian_border_detection(image):
 
     result_laplacian_image = np.clip(process_laplacian_image, 0, 255).astype(np.uint8)
 
-    return process_laplacian_image
+    return result_laplacian_image
 
 def high_boost(image, k=2.0, size=3):
     image_float = np.asarray(image, dtype=np.float32)
@@ -151,3 +151,15 @@ def sobel_y():
     ], dtype=np.float32)
 
     return kernel
+
+def sobel_magnitude(image):
+    image_float = np.asarray(image, dtype=np.float32)
+
+    gx = convolution(image_float, sobel_x())
+    gy = convolution(image_float, sobel_y())
+
+    magnitude = np.sqrt(gx**2 + gy**2)
+
+
+    #return np.clip(np.rint(magnitude), 0, 255).astype(np.uint8)
+    return magnitude
