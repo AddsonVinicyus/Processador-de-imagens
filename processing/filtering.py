@@ -133,3 +133,21 @@ def high_boost(image, k=2.0, size=3):
 
     #tom acinzentado 
     return np.clip(np.rint(result), 0, 255).astype(np.uint8)
+
+def sobel_x():
+    kernel = np.array([
+        [-1, 0, 1],
+        [-2, 0, 2],
+        [-1, 0, 1]
+    ], dtype=np.float32)
+
+    return kernel
+
+def sobel_y():
+    kernel = np.array([
+        [-1, -2, -1],
+        [0, 0, 0],
+        [1, 2, 1]
+    ], dtype=np.float32)
+
+    return kernel
