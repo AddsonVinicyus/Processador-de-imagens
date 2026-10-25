@@ -1,3 +1,6 @@
 tests/bh_contraste.jpg
 tests/bh.jpg
 tests/sptest.jpg
+__pycache__/
+*.pyc
+*.pyo
