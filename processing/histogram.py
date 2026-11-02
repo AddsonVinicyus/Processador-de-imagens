@@ -42,8 +42,10 @@ def histogram_equalization(image):
 
     return equalized_image, lut_table
 
+def calc_histogram_hsi(hsi_image):
+    i_channel = hsi_image[:, :, 2]  # Canal I (Intensidade)
 
+    i_channel_8bit = np.round(i_channel * 255).astype(np.uint8)
 
-
-
+    return calc_histogram(i_channel_8bit)
 
