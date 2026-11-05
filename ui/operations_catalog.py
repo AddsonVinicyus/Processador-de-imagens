@@ -1,8 +1,8 @@
 import numpy as np
-from models import Param, Op
+from ui.models import Param, Op
 from processing import (colors, colors_fast, filtering, frequency_tools, histogram,
                         rotation, scale, spatial)
-from util.image_utils import (
+from ui.util.image_utils import (
     DISPLAY_CHOICES,
     DISPLAY_CLIP,
     HIST_TYPES,
