@@ -10,7 +10,7 @@ def rgb_to_gray(image_array):
 
     gray_image = 0.2989 * r + 0.5870 * g + 0.1140 * b
 
-    return gray_image.astype(np.uint8)
+    return np.rint(gray_image).astype(np.uint8)
 
 def thresholding(image_array, threshold_value):
 
@@ -28,4 +28,4 @@ def brightness_adjustment(image_array, adjustment_value):
 def contrast_adjustment(image_array, contrast_value):
     alpha = (contrast_value + 127) / 127
     result = np.clip(alpha * (image_array.astype(np.float64) - 128) + 128, 0, 255)
-    return result.astype(np.uint8)
+    return np.rint(result).astype(np.uint8)
