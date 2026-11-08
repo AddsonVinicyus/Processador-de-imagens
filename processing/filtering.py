@@ -1,4 +1,5 @@
 import numpy as np
+from math import comb
 
 def convolution(image, kernel):
     image_height, image_width = image.shape
@@ -42,13 +43,13 @@ def smoothing_average(size):
     return kernel
 
 def smoothing_weighted_average(size):
-    kernel = np.array([[1, 2, 1],
-                        [2, 4, 2],
-                        [1, 2, 1]], dtype=np.float32)
+    if size < 1 or size % 2 == 0:
+        raise ValueError("O tamanho do filtro deve ser um inteiro ímpar (3, 5, 7, 9, ...)")
+    weights = np.array([comb(size - 1, k) for k in range(size)], dtype=np.float64)
+    kernel = np.outer(weights, weights)
+    kernel = kernel / kernel.sum()
 
-    kernel = kernel / 16.0
-
-    return kernel
+    return kernel.astype(np.float32)
 
 def gaussian_smoothing(size, sigma):
 
@@ -92,6 +93,9 @@ def laplacian(image, mask="sem_diagonais"):
             [1, 1, 1]
         ], dtype=np.float32)
         c = -1
+
+    else:
+        raise ValueError("Máscara inválida: use 'sem_diagonais' ou 'com_diagonais'")
 
     image_float = image.astype(np.float32)
 
