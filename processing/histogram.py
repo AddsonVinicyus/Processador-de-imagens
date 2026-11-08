@@ -49,3 +49,22 @@ def calc_histogram_hsi(hsi_image):
 
     return calc_histogram(i_channel_8bit)
 
+def histogram_equalization_hsi(hsi_image):
+    h_channel = hsi_image[:, :, 0]
+    s_channel = hsi_image[:, :, 1]
+    i_channel = hsi_image[:, :, 2]
+
+    i_channel_8bit = np.round(i_channel * 255).astype(np.uint8)
+
+    height, width = i_channel_8bit.shape
+    MN = height * width
+    histogram = calc_histogram(i_channel_8bit)[0]
+    cdf = np.cumsum(histogram)
+    lut_table = np.round((255) * cdf / MN).astype(np.uint8)
+
+    equalized_i_channel_8bit = lut_table[i_channel_8bit]
+    equalized_i_channel_norm = equalized_i_channel_8bit / 255.0
+
+    equalized_hsi_image = np.stack((h_channel, s_channel, equalized_i_channel_norm), axis=-1)
+
+    return equalized_hsi_image, lut_table
