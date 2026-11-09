@@ -5,8 +5,8 @@ def proxima_potencia_de_dois(n):
 
 def aplicar_zero_padding(image):
     height, width = image.shape
-    new_height = proxima_potencia_de_dois(height)
-    new_width = proxima_potencia_de_dois(width)
+    new_height = proxima_potencia_de_dois(2 * height - 1)
+    new_width = proxima_potencia_de_dois(2 * width - 1)
 
     pad_height = new_height - height
     pad_width = new_width - width
